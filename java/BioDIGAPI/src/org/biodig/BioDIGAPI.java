@@ -1,5 +1,7 @@
 package org.biodig;
 
+import com.sun.jersey.api.NotFoundException;
+
 public class BioDIGAPI {
 	
 	/**
@@ -20,9 +22,9 @@ public class BioDIGAPI {
 	 * @param id The unique identifier of the tag in the BioDIG system.
 	 * @return A tag object representing the tag retrieved
 	 */
-	public Tag getTag(int id) throws NotFoundException {
+//	public Tag getTag(int id) throws NotFoundException {
 		
-	}
+//	}
 	
 	/**
 	 * Creates a new tag on the server and returns the tag object that was created
@@ -30,7 +32,7 @@ public class BioDIGAPI {
 	 * @param query
 	 * @return
 	 */
-	public Tag createTag(TagQuery query) {
+//	public Tag createTag(TagQuery query) {
 		
-	}
+//	}
 }
