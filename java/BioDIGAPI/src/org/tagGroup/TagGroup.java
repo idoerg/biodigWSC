@@ -1,19 +1,18 @@
-package BioDIGAPI;
+package org.tagGroup;
 import java.util.Date;
-import com.google.gson.Gson;
 
 public class TagGroup {
-	private int ID; 
-	private int imageID;
+	private int id; 
+	private int imageid;
 	private Date lastModified;
 	private Date dateCreated;
 	private String name;
 	private String user;
 	private boolean isPrivate;
 	
-	public TagGroup (int ID, int imageID, Date lastModified, Date dateCreated, String name, String user, boolean isPrivate) {
-		this.ID = ID;
-		this.imageID = imageID;
+	public TagGroup (int id, int imageid, Date lastModified, Date dateCreated, String name, String user, boolean isPrivate) {
+		this.id = id;
+		this.imageid = imageid;
 		this.lastModified = lastModified;
 		this.dateCreated = dateCreated;
 		this.name = name;
@@ -22,9 +21,8 @@ public class TagGroup {
 	}
 	
 	public String toString() {
-		@SuppressWarnings("deprecation")
-		String str = "{\"name\": \"" + name + "\", \"lastModified\": \"" + strDate(lastModified) + "\", \"imageID\": " + imageID + ", \"user\": \"" + user + 
-				"\", \"isPrivate\": " + isPrivate + ", \"dateCreated\": \"" + strDate(dateCreated) + "\", \"id\": " + ID + "}";
+		String str = "{\"name\": \"" + name + "\", \"lastModified\": \"" + strDate(lastModified) + "\", \"imageid\": " + imageid + ", \"user\": \"" + user + 
+				"\", \"isPrivate\": " + isPrivate + ", \"dateCreated\": \"" + strDate(dateCreated) + "\", \"id\": " + id + "}";
 		return str;
 	}
 	
@@ -37,12 +35,12 @@ public class TagGroup {
 		return str;
 	}
 	
-	public int getImageID() {
-		return imageID;
+	public int getImageid() {
+		return imageid;
 	}
 
-	public void setImageID(int imageID) {
-		this.imageID = imageID;
+	public void setImageid(int imageid) {
+		this.imageid = imageid;
 	}
 
 	public String getUser() {
@@ -61,12 +59,12 @@ public class TagGroup {
 		this.isPrivate = isPrivate;
 	}
 	
-	public int getID () {
-		return ID;
+	public int getid () {
+		return id;
 	}
 
-	public void setID (int ID) {
-		this.ID = ID;
+	public void setid (int id) {
+		this.id = id;
 	}
 	
 	public Date getLastModified () {

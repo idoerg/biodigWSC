@@ -1,4 +1,6 @@
-package BioDIGAPI;
+package org.biodig;
+
+import org.tagGroup.*;
 
 import java.net.URI;
 import java.util.Arrays;
@@ -46,10 +48,10 @@ public class BioDIGAPITagGroup {
 	}
 
 	//Get request for TagGroup API
-	public TagGroup getTagGroup (int ID){	
+	public TagGroup getTagGroup (int id){	
 		requestpath = "TagGroup";
 		MultivaluedMap params = new MultivaluedMapImpl();
-		params.add("ID",Integer.toString(ID));
+		params.add("id",Integer.toString(id));
 
 		String info = (service.path(requestpath).queryParams(params).accept(mediatype).get(String.class));
 		System.out.println(info.toString());
@@ -70,19 +72,19 @@ public class BioDIGAPITagGroup {
 	}
 
 	// Edit Request for TagGroup API
-	public void putTagGroup (int ID, TagGroupQuery query) {
+	public void putTagGroup (int id, TagGroupQuery query) {
 		requestpath = "TagGroup";
-		query.addID(ID);
+		query.addid(id);
 
 		ClientResponse response = service.path(requestpath).accept(mediatype).put(ClientResponse.class,query.getQuery());
 		System.out.println(response.toString());
 	}
 
 	//Delete request for TagGroup API
-	public void deleteTagGroup(int ID) {
+	public void deleteTagGroup(int id) {
 		requestpath = "TagGroup";
 		MultivaluedMap params = new MultivaluedMapImpl();
-		params.add("ID", Integer.toString(ID));
+		params.add("id", Integer.toString(id));
 		ClientResponse response = service.path(requestpath).queryParams(params).delete(ClientResponse.class);
 		System.out.println(response.toString());
 	}

@@ -1,4 +1,4 @@
-package BioDIGAPI;
+package org.tagGroup;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -8,15 +8,15 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class TagGroupQuery{
 	MultivaluedMap params;
-	private int ID,imageID;
+	private int id,imageid;
 	private String name,user;
 	private Date lastModified, dateCreated;
 	private boolean isPrivate;
 
 	public TagGroupQuery(){
 		this.params = new MultivaluedMapImpl();
-		this.ID = -1;
-		this.imageID = -1;
+		this.id = -1;
+		this.imageid = -1;
 		this.lastModified = null;
 		this.dateCreated = null;
 		this.name = "";
@@ -24,12 +24,12 @@ public class TagGroupQuery{
 		this.isPrivate = false;
 	}
 
-	public void addID(int ID) {
-		this.ID = ID;
+	public void addid(int id) {
+		this.id = id;
 	}
 
-	public void addImageID(int imageID) {
-		this.imageID = imageID;
+	public void addImageid(int imageid) {
+		this.imageid = imageid;
 	}
 
 	public void addLastModified(Date date) {
@@ -53,10 +53,10 @@ public class TagGroupQuery{
 	}
 	
 	public MultivaluedMap getQuery() {
-		if(ID != -1)
-			params.add("ID", Integer.toString(ID));
-		if(imageID != -1)
-			params.add("imageID", Integer.toString(imageID));
+		if(id != -1)
+			params.add("id", Integer.toString(id));
+		if(imageid != -1)
+			params.add("imageid", Integer.toString(imageid));
 		if(lastModified != null)
 			params.add("lastModified", strDate(lastModified));
 		if(dateCreated != null)
