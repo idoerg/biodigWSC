@@ -1,4 +1,4 @@
-package org.biodig.genelinks;
+package geneLinks;
 
 //Shell Class for genes
 //Old class that was used before

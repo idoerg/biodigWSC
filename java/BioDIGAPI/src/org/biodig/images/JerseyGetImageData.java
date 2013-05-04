@@ -1,78 +1,88 @@
-package org.biodig.images;
+package images;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
+import javax.xml.ws.http.HTTPException;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.apache.ApacheHttpClient;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
-
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.io.File;
+import java.net.URI;
 import java.net.URL;
-import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.xml.ws.http.HTTPException;
-
-import org.biodig.*;
 
 public class JerseyGetImageData 
 {
-	// Location of the server the API draws from
-	static String imageBioDIG_URL = "http://wan1.mbi.muohio.edu/dome/";
-
-
-	public static void main(String[] args) 
+	//Local Variables used in the methods.
+	private JsonParser jsonParser = null;
+	private JsonArray MyDIGArray = null;
+	private String URL;
+	private String mediaType = "MediaType.APPLICATION_JSON";
+	private ClientConfig config = null;
+	private Client client = null;
+	private WebResource service = null;
+	private String requestpath;
+	
+	//Constructor that creates the information needed for API calls.
+	public JerseyGetImageData ( String URL ) {
+		this.URL = URL;
+		this.config = new DefaultClientConfig();
+		this.client = Client.create(config);
+		this.service = client.resource(getBaseURI());
+	}
+	
+	//Converts a string to a URL compatable with WebResource.
+	public URI getBaseURI() 
 	{
-		getImageInfo("12");
+		return UriBuilder.fromUri(URL).build();
 	}
-	
-	// GET METHOD
-	public static void getImageInfo(String imgId) {
-		try
-		{
-		ClientConfig config = new DefaultClientConfig();
-		Client client = Client.create(config);
-		WebResource service = client.resource(UriBuilder.fromUri("http://192.168.142.128/api/images?id="+imgId).build());
-		ClientResponse response = service.accept(MediaType.TEXT_HTML).get(ClientResponse.class);
-	//---Used for debugging purposes to check the status of the Get call----
-		//System.out.println(response.toString());
-
-		String imageMetaData = service.accept(MediaType.APPLICATION_JSON).get(String.class);
-		//System.out.println(imageMetaData);
 		
-		//Creation of objects to parse the raw JSON data
-		imageData img = new Gson().fromJson(imageMetaData, imageData.class);
+	// GET METHOD
+	//Uses MultivaluedMap to process the information
+	public imageData getImageInfo(int imgId) {
+		
+			requestpath = "images";
+			MultivaluedMap params = new MultivaluedMapImpl();
+			params.add("id",Integer.toString(imgId));
 
-		System.out.println(img.toString());
-		}
-		catch(UniformInterfaceException e)
-		{
-			System.out.println("The image id you have provided does not exist. Please enter a valid image Id.");
-			e.printStackTrace();
-		}
+			String info = (service.path(requestpath).queryParams(params).accept(mediaType).get(String.class));
+			System.out.println(info.toString());
+
+			Gson myGson = new Gson();
+			jsonParser = new JsonParser();
+			JsonElement tagSelement= jsonParser.parse(info);
+			imageData newImageData = myGson.fromJson(tagSelement, imageData.class);
+			return newImageData;
+		
 	}
 	
+	//Test to retrieve the image and display the image file.
 	public static void getImage(String imageURL)
 	{
 		try 
 		{
 		 //Flushes the image and grabs a link 
 		  Image image = null; 
-		  URL url = new URL("http://192.168.142.128/media/pictures/1366322421.631cfcbd94d4f27a1f6c8719e611eb46dd.png"); image = ImageIO.read(url); // Use a label to display the image
+		  URL url = new URL(imageURL); image = ImageIO.read(url); // Use a label to display the image
 		  JFrame frame = new JFrame();
 		  
 		  JLabel lblimage = new JLabel(new ImageIcon(image));
@@ -89,63 +99,57 @@ public class JerseyGetImageData
 	}
 
 	}
-	
-	static public void editImageInfo(String oldImgId, imageData img)
+	//Edits a pre-existing image with new information.
+	//Had to use the FormData due to POST being an arseface(Was not working with MultivaluedMap)
+	public void editImageInfo(int imageId, imageDataQuery query)
 	{
-		try
-		{
-			//opens connection with client
-			ClientConfig cc = new DefaultClientConfig();
-	        Client client = Client.create(cc);
-	        WebResource resource = client.resource("http://192.168.142.128/api/images");
-			//Put
-			
-	        //Adds parameters to be posted
+
+			try
+			{
+				//opens connection with client
+		        WebResource resource = client.resource(URL+"/images");
+
+		        //Adds parameters to be posted
 		        FormDataMultiPart form = new FormDataMultiPart();
 		        //Logic check to determine what is posted to the image
-		        if(img.getAltText()!="" && img.getAltText()!=null)
-		        form.field("altText",img.getAltText());
-		        if(img.getDescription()!="" && img.getDescription()!=null)
-		        form.field("description",img.getDescription());
-		        if(img.getOrganisms()!=null)
-		        form.field("organisms",img.getOrganisms().toString());
+		        if(query.getAltText()!= "")
+		        form.field("altText",query.getAltText());
+		        if(query.getDescription()!="")
+		        form.field("description",query.getDescription());
+		        if(query.getOrganisms()!=null)
+		        form.field("organisms",query.getOrganisms().toString());
+		        
+		        //Method specific addition of the image id
+		        form.field("id", Integer.toString(imageId));
 		        ClientResponse response = resource.type(MediaType.MULTIPART_FORM_DATA).put(ClientResponse.class, form);
 		        System.out.println(response.toString());
-			
+			}
+			catch(HTTPException e)
+			{
 				System.out.println("The image id you have provided does not exist. Please enter a valid image Id.");
 			}
-		
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-         
 	}
 
 	//Adds an image, file path is required.
-	static public void addImage(String filepath, imageData img)
+	//Uses FormDataMultiPart due to the special parameter of a file, and Query was not equipt to handle the challenge
+	//FormDataMultiPart is also used in PUT since they share many of the same mechanics.
+	public void addImage(String filepath, imageDataQuery query)
 	{
 		try
 		{
 			//opens connection with client
-			ClientConfig cc = new DefaultClientConfig();
-	        Client client = Client.create(cc);
-	        WebResource resource = client.resource("http://192.168.142.128/api/images");
-			//Put
-			
-	        
-	        
+	        WebResource resource = client.resource(URL+"/images");
+
 	        //Adds parameters to be posted
 	        FormDataMultiPart form = new FormDataMultiPart();
 	        File file = new File(filepath);
 	        //Logic check to determine what is posted to the image
-	        if(img.getAltText()!="" && img.getAltText()!=null)
-	        form.field("altText",img.getAltText());
-	        if(img.getDescription()!="" && img.getDescription()!=null)
-	        form.field("description",img.getDescription());
-	        if(img.getOrganisms()!=null)
-	        form.field("organisms",img.getOrganisms().toString());
+	        if(query.getAltText()!= "")
+	        form.field("altText",query.getAltText());
+	        if(query.getDescription()!="")
+	        form.field("description",query.getDescription());
+	        if(query.getOrganisms()!=null)
+	        form.field("organisms",query.getOrganisms().toString());
 	        form.bodyPart(new FileDataBodyPart("image", file, MediaType.MULTIPART_FORM_DATA_TYPE));
 	        ClientResponse response = resource.type(MediaType.MULTIPART_FORM_DATA).post(ClientResponse.class, form);
 	        System.out.println(response.toString());
@@ -156,8 +160,9 @@ public class JerseyGetImageData
 		}
 	}
 	
-	//Deletes the image, with the metadata using Apache HTTP Client
-	static public void deleteImage(String imgId)
+	//Deletes the image
+	//Side note, I had to use the old DELETE, I was getting bad request callbacks.
+	public void deleteImage(int id)
 	{
 		try
 		{
@@ -167,16 +172,17 @@ public class JerseyGetImageData
 	        WebResource resource = client.resource("http://192.168.142.128/api/images");
 	        FormDataMultiPart form = new FormDataMultiPart();
 
-	        form.field("id",imgId);
+	        form.field("id",Integer.toString(id));
 
 
 	       resource.type(MediaType.MULTIPART_FORM_DATA).delete(form);
 
-	       System.out.println("Image "+imgId+" has been deleted successfully!");
+	       System.out.println("Image "+Integer.toString(id)+" has been deleted successfully!");
 		}
 		catch(HTTPException e)
 		{
 			System.out.println("The image id you have provided does not exist. Please enter a valid image Id.");
 		}
+		
 	}
 }

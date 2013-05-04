@@ -1,4 +1,4 @@
-package org.biodig.images;
+package images;
 public class Organism
 	{
 		public Organism(String abbreviation, String genus, String commonName,

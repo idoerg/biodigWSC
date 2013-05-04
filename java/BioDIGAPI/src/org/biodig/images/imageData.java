@@ -1,4 +1,4 @@
-package org.biodig.images;
+package images;
 
 import java.util.List;
 

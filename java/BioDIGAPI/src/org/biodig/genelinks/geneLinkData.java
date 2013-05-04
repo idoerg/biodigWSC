@@ -1,4 +1,4 @@
-package org.biodig.genelinks;
+package geneLinks;
 
 public class geneLinkData 
 {
