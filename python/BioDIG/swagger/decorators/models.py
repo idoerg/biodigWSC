@@ -1,0 +1,31 @@
+#!usr/bin/python
+
+@Property('color','TagColor')
+@Property('name','String')
+@Property('point','Point')
+@Property('dateCreated','String')
+@Property('id','Integer')
+class Tag(Models.Model:
+        id = Models.Number()
+        color = Models.ForeignKey(TagColor)
+        name = Models.Text()
+        dateCreated = Models.Text()
+        point = Models.ForeignKey(Point)
+)
+
+@Property('id','Integer')
+@Property('imageid','Integer')
+@Property('lastModified','Date')
+@Property('dateCreated','Date')
+@Property('name','String')
+@Property('user','String')
+@Property('isPrivate','boolean')
+class TagGroup(Models.Model:
+        id = Models.Number()
+        imageid = Models.Number()
+        lastModified = Models.ForeignKey(Date)
+        dateCreated = Models.ForeignKey(Date)
+        name = Models.Text()
+        user = Models.Text()
+        isPrivate = Models.Boolean()
+)
