@@ -28,13 +28,28 @@
        return fn
 	}
 
-    def paramType_Body(fn, body):
+    def paramType_Body(fn, body, description = Description.description):
+	if(description == Description.description)
+	{
        fn.__body = body;
        return fn
-
-    def paramType_Form(fn, form):
+	}
+	else
+	{
+	fn.__body = description;
+       return fn
+	}
+    def paramType_Form(fn, form, description = Description.description):
+       if(description == Description.description)
+	{
        fn.__form = form;
        return fn
+	}
+	else
+	{
+	fn.__form = description;
+       return fn
+	}
 
     def Name(fn, name, description):
 	if (name != "") or (name != null)
