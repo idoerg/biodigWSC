@@ -1,21 +1,25 @@
 #!usr/bin/python
 
-##Hopefully the hierarchy of Properties was captured with that code.
-def Properties(fn, name, type):
-    fn.__name = name;
-    fn.__type = type;
+
+def Properties(name, type):
+    def inner(fn):
+        fn.__name = name
+        fn.__type = type
     return fn
 
-def Name(fn, name):
-    fn.__name = name;
+def Name(name):
+    def inner(fn):
+        fn.__name = name
     return fn
 
-def Type(fn, type):
-    fn.__type = type;
+def Type(type):
+    def inner(fn):
+        fn.__type = type
     return fn
 
-def Id(fn, type, format):
-    fn.__type = type;
-    fn.__format = format;
+def Id(type, format):
+    def inner(fn):
+        fn.__type = type
+        fn.__format = format
     return fn
 

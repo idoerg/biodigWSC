@@ -2,25 +2,30 @@
 
 ###Includes the conversion for types
 
-def Method(fn,method):
-    fn.__TagColor = method;
+def Method(method):
+    def inner(fn):
+        fn.__TagColor = method;
     return fn
 
 ##Requires the Tag class
-def Nickname(fn, Tag):
-    fn.__Tag = Tag.name;
+def Nickname(Tag):
+    def inner(fn):
+        fn.__Tag = Tag.name;
     return fn
 
-def Type(fn, String):
-    fn.__String = String;
+def Type(String):
+    def inner(fn):
+        fn.__String = String;
     return fn
 
-def Summary(fn, summary):
-    fn.__summary = summary;
+def Summary(summary):
+    def inner(fn):
+        fn.__summary = summary;
     return fn
 
-def Notes(fn, notes):
-    fn.__notes = notes;
+def Notes(notes):
+    def inner(fn):
+        fn.__notes = notes;
     return fn
 
 
