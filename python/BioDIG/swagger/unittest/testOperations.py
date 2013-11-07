@@ -16,8 +16,9 @@ class BioDIGtest(unittest.TestCase):
             pass
 
         # test Operations.Method
-        soln = [Operation.setMethod(self, 'GET')]
-        self.assertEqual(testMethod.__operation.method, soln)
+        op1 = Operation()
+        op1.setMethod('GET')
+        self.assertEqual(testMethod.__operation, op1)
 
 
         @Operations.Nickname('nickname')
