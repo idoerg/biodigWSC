@@ -66,8 +66,8 @@ class Operation(object):
         self.object = None #default value for object
 
 #Setters for the variables
-    def setDescription(self, desc):
-        self.description = desc
+    def setName(self, name):
+        self.description = name
         
     def setNickname(self, nick):
         self.nickname = nick

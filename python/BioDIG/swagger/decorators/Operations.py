@@ -1,7 +1,7 @@
 #!usr/bin/python
 
 
-#For reference check the APIs section in Resource Listing
+#For reference check the APIs section in API Declaration
 
 ###Includes the conversion for types
 
@@ -25,6 +25,7 @@ def Nickname(nickname):
         fn.__nickname = nickname;
         return fn
     return inner
+
 
 def Type(object):
     def inner(fn):

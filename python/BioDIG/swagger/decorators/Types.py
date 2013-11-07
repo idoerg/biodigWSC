@@ -64,8 +64,6 @@ class Operation(object):
     def __init__(self):
         self.name = '' # default value for nickname
         
-        self.dateCreated = None #default value for method
-        
         self.ID = '' #default value for summary
         
         self.user = '' #default value for user
@@ -75,9 +73,6 @@ class Operation(object):
 #Setters for the variables
     def setName(self, name):
         self.description = name
-        
-    def setDateCreated(self, dateCreated):
-        self.dateCreated = dateCreated
         
     def setID(self, ID):
         self.ID = ID   

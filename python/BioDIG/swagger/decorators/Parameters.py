@@ -6,12 +6,15 @@
 
 ##Function:Parameter
 ##Use:Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_Path(path, description):
+def ParamType_Path(path):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
            
-        fn.__operation.setParamType(Operation.path)
+        if(path == '' and Operation.name != ''):    
+            fn.__operation.setParamType(Operation.name)
+        else:    
+            fn.__operation.setParamType(Operation.path)
         return fn
     return inner
 ##Function: Parameter Type query
@@ -21,7 +24,10 @@ def ParamType_Query(query):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
             
-        fn.__operation.setParamType(Operation.query)
+        if(query == '' and Operation.name != ''):    
+            fn.__operation.setParamType(Operation.name)
+        else:    
+            fn.__operation.setParamType(Operation.query)
         return fn
     return inner
     
@@ -32,7 +38,10 @@ def ParamType_Body(body, description):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
         
-        fn.__operation.setParamType(Operation.body)
+        if(body == '' and Operation.name != ''):    
+            fn.__operation.setParamType(Operation.name)
+        else:    
+            fn.__operation.setParamType(Operation.body)
         return fn
     return inner
 ##Function: Parameter Type Form
@@ -42,7 +51,10 @@ def ParamType_Form(form):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
            
-        fn.__operation.setParamType(Operation.form)
+        if(form == '' and Operation.name != ''):    
+            fn.__operation.setParamType(Operation.name)
+        else:    
+            fn.__operation.setParamType(Operation.form)
         return fn
     return inner
     
@@ -57,13 +69,17 @@ def Name(name):
     return inner
 
 ##Function:Description
-##Use:Describles the particular parameter
+##Use:Describles the particular parameter, paired with name
 def Description(desc):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
             
-        fn.__operation.setDescription(Operation.desc)
+            
+        if(desc == ''):    
+            fn.__operation.setDescription(Operation.name)
+        else:
+            fn.__operation.setDescription(Operation.desc)
         return fn
     return inner
 
