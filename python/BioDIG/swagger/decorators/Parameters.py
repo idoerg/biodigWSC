@@ -5,22 +5,22 @@
 
 ##Function:Parameter
 ##Use:Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_path(path, description):
+def ParamType_Path(path, description):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
            
-        fn.__operation.setDescription(Operation.desc)
+        fn.__operation.setParamType(Operation.path)
         return fn
     return inner
 ##Function: Parameter Type query
 ##Use: Has logic to determine if the name value has been populated. Will enter a default name if it has not, will preserve if it has
-def ParamType_query(query):
+def ParamType_Query(query):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
             
-        fn.__operation.setDescription(Operation.desc)
+        fn.__operation.setParamType(Operation.query)
         return fn
     return inner
     
@@ -31,17 +31,17 @@ def ParamType_Body(body, description):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
         
-        fn.__operation.setDescription(Operation.desc)
+        fn.__operation.setParamType(Operation.body)
         return fn
     return inner
 ##Function: Parameter Type Form
-##Use:##Use:Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_Form(form, description):
+##Use: Used to define the parameter type for the request. Will default if nothing is provided
+def ParamType_Form(form):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
            
-        fn.__operation.setDescription(Operation.desc)
+        fn.__operation.setParamType(Operation.form)
         return fn
     return inner
     
@@ -49,8 +49,10 @@ def ParamType_Form(form, description):
 ##Use:Defines what the name of the parameter block you are sending.
 def Name(name):
     def inner(fn):
-        fn.__name = name
-        return fn
+        if not hasattr(fn, '__operation'):
+            fn.__operation = Operation()
+            
+        fn.__operation.setName(Operation.name)
     return inner
 
 ##Function:Description
@@ -68,22 +70,31 @@ def Description(desc):
 ##Use:Must be a primitive if the paramType is a path, query, or header
 def Datatype(datatype):
     def inner(fn):
-        fn.__datatype = datatype
-        return fn
+        if not hasattr(fn, '__operation'):
+            fn.__operation = Operation()
+            
+        fn.__operation.setDatatype(Operation.dataType)
     return inner
 
 ##Function: Format of the API 
 ##Use: Determines if the format is an integer, double, string, etc.
-def Format(APIformat):
+def Format(format):
     def inner(fn):
-        fn.__APIformat = APIformat
+        if not hasattr(fn, '__operation'):
+            fn.__operation = Operation()
+            
+        fn.__operation.setFormat(Operation.format)
         return fn
+    return inner
 
 ##Function: Required Parameter
 ##Use: Decorator for the required field, with the default being true
-def required_true(required = True):
+def required(required):
     def inner(fn):
-        fn.__required = required
+        if not hasattr(fn, '__operation'):
+            fn.__operation = Operation()
+            
+        fn.__operation.setRequired(Operation.required)
         return fn
     return inner
 
@@ -93,5 +104,36 @@ class Operation(object):
     def __init__(self):
         self.description = '' # default value for description
 
+        self.required = True #defualt value for required
+
+        self.format = '' #default value for format
+
+        self.dataType = '' #default value for dataType
+        
+        self.name = '' #default value for name
+        
+        self.form = '' #default value for the form paramType
+        
+        self.body = '' #default value for the body ParamType
+        
+        self.query = '' #default value for the query ParamType
+        
+        self.path = '' #default value for the path ParamType
+
     def setDescription(self, desc):
         self.description = desc
+        
+    def setName(self, name):
+        self.name = name
+        
+    def setForm(self, form):
+        self.form = form   
+    
+    def setRequired(self, required):
+        self.required = required
+        
+    def setDataType(self, dataType):
+        self.dataType = dataType    
+        
+    def setParamType(self, param):
+        self.param = param
