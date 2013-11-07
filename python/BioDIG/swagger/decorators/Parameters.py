@@ -1,6 +1,7 @@
 #!usr/bin/python
 
 ##Decorators for the parameters
+##See the Parameters section in the Swagger Specification
 ##Last edited By Dan Ruhe
 
 ##Function:Parameter

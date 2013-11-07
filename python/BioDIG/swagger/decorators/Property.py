@@ -1,6 +1,7 @@
 #!usr/bin/python
 
 
+#Decorator that is used when you define a more complex structure
 def Properties(name, type):
     def inner(fn):
         if not hasattr(fn, '__operation'):
@@ -14,6 +15,7 @@ def Properties(name, type):
         return fn
     return inner
 
+#Used to define the name
 def Name(name):
     def inner(fn):
         if not hasattr(fn, '__operation'):
@@ -24,6 +26,7 @@ def Name(name):
         return fn
     return inner
 
+#Used to define the type of the function
 def Type(type):
     def inner(fn):
         if not hasattr(fn, '__operation'):
@@ -34,6 +37,7 @@ def Type(type):
         return fn
     return inner
 
+#Complex decorator that needs the name and the type
 def Id(type, format):
     def inner(fn):
         if not hasattr(fn, '__operation'):
@@ -57,10 +61,11 @@ class Operation(object):
         
         self.summary = '' #default value for summary
         
-        self.notes = '' #defualt value for notes
+        self.notes = '' #default value for notes
         
         self.object = None #default value for object
 
+#Setters for the variables
     def setDescription(self, desc):
         self.description = desc
         

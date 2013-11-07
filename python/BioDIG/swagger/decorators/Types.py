@@ -1,5 +1,8 @@
 #!usr/bin/python
 
+
+#For references see the Data Types section of the Swagger Specification
+
 ###Includes the conversion for types
 String = 'string'
 Boolean = 'boolean'
@@ -8,40 +11,79 @@ Integer = 'int'
 dateTime = 'date-time'
 
 
-
+#Sets the name of a Type
 def Name(name):
     def inner(fn):
-        fn.__name = name
+        if not hasattr(fn, '__operation'):
+            fn.__operation = Operation()  
+            
+        fn.__operation.setName(Operation.name)
+        fn.__name = name;
         return fn
     return inner
 
-
-def DateCreated(dateCreated):
+#Sets the ID of the type, 
+def Id(ID):
     def inner(fn):
-        fn.__dateCreated = dateCreated
+        if not hasattr(fn, '__operation'):
+            fn.__operation = Operation()  
+            
+        fn.__operation.setID(Operation.ID)
+        fn.__ID = ID;
         return fn
     return inner
 
-def Id(apiID):
-    def inner(fn):
-        fn.__apiID = apiID
-        return fn
-    return inner
 
-def LastModified(lastModified):
-    def inner(fn):
-        fn.__lastModified = lastModified
-        return fn
-    return inner
-
+#Sets the user property for the type
 def User(user):
     def inner(fn):
-        fn._user = user
+        if not hasattr(fn, '__operation'):
+            fn.__operation = Operation()  
+            
+        fn.__operation.setUser(Operation.user)
+        fn.__user = user;
         return fn
     return inner
 
-def IsPrivate(isPrivate = True):
+#Will set the type's visibility property
+def IsPrivate(isPrivate):
     def inner(fn):
-        fn.__isPrivate = isPrivate
+        if not hasattr(fn, '__operation'):
+            fn.__operation = Operation()  
+            
+        fn.__operation.setisPrivate(Operation.isPrivate)
+        fn.__isPrivate = isPrivate;
         return fn
     return inner
+
+
+#####Group of Objects below here
+
+# The object for decorators looking for description
+class Operation(object):
+    def __init__(self):
+        self.name = '' # default value for nickname
+        
+        self.dateCreated = None #default value for method
+        
+        self.ID = '' #default value for summary
+        
+        self.user = '' #default value for user
+        
+        self.isPrivate = True #default value for isPrivate
+
+#Setters for the variables
+    def setName(self, name):
+        self.description = name
+        
+    def setDateCreated(self, dateCreated):
+        self.dateCreated = dateCreated
+        
+    def setID(self, ID):
+        self.ID = ID   
+        
+    def setUser(self, user):
+        self.user= user   
+        
+    def setIsPrivate(self, isPrivate):
+        self.isPrivate = isPrivate   
