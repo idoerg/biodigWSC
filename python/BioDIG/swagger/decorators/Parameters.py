@@ -4,17 +4,23 @@
 ##See the Parameters section in the Swagger Specification
 ##Last edited By Dan Ruhe
 
+ParamType = {
+    'PATH' : 'path',
+    'QUERY' : 'query',
+    'HEADER' : 'header',
+    'FORM' : 'form',
+    'BODY' : 'body'
+}
+
 ##Function:Parameter
 ##Use:Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_Path(path):
+def ParamType_Path(name, description='', dataType='', format=''):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
            
-        if(path == '' and Operation.name != ''):    
-            fn.__operation.setParamType(Operation.name)
-        else:    
-            fn.__operation.setParamType(Operation.path)
+        fn.__operation.addParam(Parameter(ParamType.PATH, name, description, dataType, format))
+        
         return fn
     return inner
 ##Function: Parameter Type query
@@ -58,28 +64,19 @@ def ParamType_Form(form):
         return fn
     return inner
     
-##Function:Name
-##Use:Defines what the name of the parameter block you are sending.
-def Name(name):
-    def inner(fn):
-        if not hasattr(fn, '__operation'):
-            fn.__operation = Operation()
-            
-        fn.__operation.setName(Operation.name)
-    return inner
-
 ##Function:Description
 ##Use:Describles the particular parameter, paired with name
-def Description(desc):
+def Description(name, desc):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
             
-            
-        if(desc == ''):    
-            fn.__operation.setDescription(Operation.name)
-        else:
-            fn.__operation.setDescription(Operation.desc)
+        param = fn.__operation.getParameter(name)
+        if not param:
+            param = Parameter(name)
+
+        param.setDescription(desc)
+        
         return fn
     return inner
 
@@ -117,7 +114,7 @@ def required(required):
 
 
 # The object for decorators looking for description
-class Operation(object):
+class Parameter(object):
     def __init__(self):
         self.description = '' # default value for description
 

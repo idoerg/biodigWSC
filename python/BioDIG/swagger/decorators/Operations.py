@@ -5,6 +5,17 @@
 
 ###Includes the conversion for types
 
+# Constants for the Method Decorator
+GET = 'GET'
+POST = 'POST'
+PUT = 'PUT'
+DELETE = 'DELETE'
+
+'''
+   Sets the method being used one 4 HTTP methods.
+
+   @param method The method to use GET, POST, PUT, DELETE
+'''
 def Method(method):
     def inner(fn):
         if not hasattr(fn, '__operation'):
@@ -14,7 +25,14 @@ def Method(method):
         return fn
     return inner
 
-##Requires the Tag class
+'''
+   Sets the nickname of the operation being described.
+   This often corresponds to the method and the resource.
+   For instance, a GET method with a type of Tag would usually
+   revceive the nickname of "getTag".
+
+   @param nickname The off-hand name for the operation.
+'''
 def Nickname(nickname):
     def inner(fn):
         if not hasattr(fn, '__operation'):
@@ -24,7 +42,13 @@ def Nickname(nickname):
         return fn
     return inner
 
+'''
+    Sets the type returned by the operation. This type should be
+    a primitive, which should be a constant from Types or an object
+    annotated correctly using the Types decorators.
 
+    @param obj The object/primitive returned by the operation
+'''
 def Type(obj):
     def inner(fn):
         if not hasattr(fn, '__operation'):
@@ -34,6 +58,9 @@ def Type(obj):
         return fn
     return inner
 
+'''
+
+'''
 def Summary(summary):
     def inner(fn):
         if not hasattr(fn, '__operation'):
@@ -68,7 +95,7 @@ class Operation(object):
         
         self.notes = '' #defualt value for notes
         
-        self.object = None #default value for object
+        self.obj = None #default value for object
 
     def setDescription(self, desc):
         self.description = desc
