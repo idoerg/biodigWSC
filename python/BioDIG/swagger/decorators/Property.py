@@ -1,5 +1,6 @@
 #!usr/bin/python
 
+#This section was based off of the Swagger Specification of Data Types under the Complex Types section
 
 #Decorator that is used when you define a more complex structure
 def Properties(name, type):

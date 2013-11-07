@@ -137,6 +137,7 @@ class Operation(object):
         
         self.path = '' #default value for the path ParamType
 
+#Setters for the variables above
     def setDescription(self, desc):
         self.description = desc
         

@@ -1,7 +1,7 @@
 #!usr/bin/python
 
 
-#For references see the Data Types section of the Swagger Specification
+#For reference see the Data Types section of the Swagger Specification
 
 ###Includes the conversion for types
 String = 'string'

@@ -33,9 +33,9 @@ def Description(desc):
 class Operation(object):
     def __init__(self):
         
-        self.path = '' #defualt values
+        self.path = '' #default values
         
-        self.desc = '' #defualt values
+        self.desc = 'I AM THE VEST!' #default values
         
         
     #Setters for the variables
