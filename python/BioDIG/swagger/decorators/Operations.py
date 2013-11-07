@@ -10,8 +10,7 @@ def Method(method):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
             
-        fn.__operation.setmethod(Operation.method)
-        fn.__method = method;
+        fn.__operation.setmethod(method)
         return fn
     return inner
 
@@ -21,19 +20,17 @@ def Nickname(nickname):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
             
-        fn.__operation.setNickname(Operation.nick)
-        fn.__nickname = nickname;
+        fn.__operation.setNickname(nickname)
         return fn
     return inner
 
 
-def Type(object):
+def Type(obj):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
             
-        fn.__operation.setObject(Operation.object)
-        fn.__object = object;
+        fn.__operation.setObject(obj)
         return fn
     return inner
 
@@ -42,8 +39,7 @@ def Summary(summary):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
             
-        fn.__operation.setSummary(Operation.summary)
-        fn.__summary = summary;
+        fn.__operation.setSummary(summary)
         return fn
     return inner
 
@@ -52,8 +48,7 @@ def Notes(notes):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()  
             
-        fn.__operation.setNotes(Operation.notes)
-        fn.__notes = notes;
+        fn.__operation.setNotes(notes)
         return fn
     return inner
 
