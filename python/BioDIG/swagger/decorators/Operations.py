@@ -10,7 +10,7 @@ def Method(method):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
             
-        fn.__operation.setmethod(method)
+        fn.__operation.setMethod(method)
         return fn
     return inner
 
