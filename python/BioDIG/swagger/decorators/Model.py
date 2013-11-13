@@ -69,7 +69,7 @@ class Attribute(object):
 
 #Setters for the variables
     def setName(self, name):
-        self.description = name
+        self.name = name
         
     def setNickname(self, nick):
         self.nickname = nick
