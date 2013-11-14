@@ -73,7 +73,7 @@ class BioDIGtest(unittest.TestCase):
         soln = Attribute()
         soln.setName('name')
         soln.setType(Types.String)
-        self.assertEqual(testProperty.__operation,soln)
+        self.assertEqual(testProperty.__model,soln)
 
         @Model.Name('name')
         def testName():
