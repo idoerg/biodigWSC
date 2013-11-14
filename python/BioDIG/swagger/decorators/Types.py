@@ -1,6 +1,7 @@
 #!usr/bin/python
 
-
+import Operations
+Operation = Operations.Operation()
 #For reference see the Data Types section of the Swagger Specification
 
 ###Includes the conversion for types
@@ -17,7 +18,7 @@ def Name(name):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()  
             
-        fn.__operation.setName(Operation.name)
+        fn.__types.setName(Operation.name)
         fn.__name = name;
         return fn
     return inner
@@ -28,7 +29,7 @@ def Id(ID):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()  
             
-        fn.__operation.setID(Operation.ID)
+        fn.__types.setID(Operation.ID)
         fn.__ID = ID;
         return fn
     return inner
@@ -38,9 +39,9 @@ def Id(ID):
 def User(user):
     def inner(fn):
         if not hasattr(fn, '__operation'):
-            fn.__operation = Operation()  
+            fn.__operation = Operations.Operation()  
             
-        fn.__operation.setUser(Operation.user)
+        fn.__types.setUser(user)
         fn.__user = user;
         return fn
     return inner
@@ -51,7 +52,7 @@ def IsPrivate(isPrivate):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()  
             
-        fn.__operation.setisPrivate(Operation.isPrivate)
+        fn.__types.setisPrivate(isPrivate)
         fn.__isPrivate = isPrivate;
         return fn
     return inner
@@ -60,7 +61,7 @@ def IsPrivate(isPrivate):
 #####Group of Objects below here
 
 # The object for decorators looking for description
-class Operation(object):
+class Types(object):
     def __init__(self):
         self.name = '' # default value for nickname
         

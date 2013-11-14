@@ -1,5 +1,9 @@
 #!usr/bin/python
 
+##Used to import the Operations class and the methods there
+import Operations
+Operation = Operations.Operation()
+
 #For reference see the API Declaration portion in the Swagger Specification
 
 #Used to set the path of your API
@@ -8,7 +12,7 @@ def Path(path):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()  
             
-        fn.__operation.setPath(Operation.path)
+        fn.__application.setPath(path)
         fn.__path = path;
         return fn
         
@@ -21,7 +25,7 @@ def Description(desc):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()  
             
-        fn.__operation.setDescription(Operation.desc)
+        fn.__application.setDescription(desc)
         fn.__desc = desc;
         return fn
         
@@ -30,12 +34,12 @@ def Description(desc):
     return inner
 
 #Class for the variables and operations
-class Operation(object):
+class Application(object):
     def __init__(self):
         
         self.path = '' #default values
         
-        self.desc = 'I AM THE VEST!' #default values
+        self.desc = '' #default values
         
         
     #Setters for the variables

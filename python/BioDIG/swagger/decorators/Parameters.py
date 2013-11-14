@@ -1,5 +1,11 @@
 #!usr/bin/python
 
+
+##Used to import the Operations class and the methods there
+import Operations
+Operation = Operations.Operation()
+
+
 ##Decorators for the parameters
 ##See the Parameters section in the Swagger Specification
 ##Last edited By Dan Ruhe
@@ -14,53 +20,44 @@ ParamType = {
 
 ##Function:Parameter
 ##Use:Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_Path(name, description='', dataType='', format=''):
+def ParamType_Path(name, description='', dataType='', form=''):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
            
-        fn.__operation.addParam(Parameter(ParamType.PATH, name, description, dataType, format))
+        fn.__parameter.addParam(Parameter(ParamType.PATH, name, description, dataType, form))
         
         return fn
     return inner
 ##Function: Parameter Type query
 ##Use: Has logic to determine if the name value has been populated. Will enter a default name if it has not, will preserve if it has
-def ParamType_Query(query):
+def ParamType_Query(name, description='', dataType='', form=''):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
             
-        if(query == '' and Operation.name != ''):    
-            fn.__operation.setParamType(Operation.name)
-        else:    
-            fn.__operation.setParamType(Operation.query)
+        fn.__parameter.addParam(Parameter(ParamType.QUERY, name, description, dataType, form))
         return fn
     return inner
     
 ##Function:Parameter Type Body
 ##Use:Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_Body(body, description):
+def ParamType_Body(name, description='', dataType='', form=''):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
         
-        if(body == '' and Operation.name != ''):    
-            fn.__operation.setParamType(Operation.name)
-        else:    
-            fn.__operation.setParamType(Operation.body)
+        fn.__parameter.addParam(Parameter(ParamType.BODY, name, description, dataType, form))
         return fn
     return inner
 ##Function: Parameter Type Form
 ##Use: Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_Form(form):
+def ParamType_Form(name, description='', dataType='', form=''):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
            
-        if(form == '' and Operation.name != ''):    
-            fn.__operation.setParamType(Operation.name)
-        else:    
-            fn.__operation.setParamType(Operation.form)
+        fn.__parameter.addParam(Parameter(ParamType.FORM, name, description, dataType, form))
         return fn
     return inner
     
@@ -82,22 +79,22 @@ def Description(name, desc):
 
 ##Function: Datatype parameter
 ##Use:Must be a primitive if the paramType is a path, query, or header
-def Datatype(datatype):
+def Datatype(dataType):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
             
-        fn.__operation.setDatatype(Operation.dataType)
+        fn.__parameter.setDatatype(dataType)
     return inner
 
 ##Function: Format of the API 
 ##Use: Determines if the format is an integer, double, string, etc.
-def Format(format):
+def Format(form):
     def inner(fn):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
             
-        fn.__operation.setFormat(Operation.format)
+        fn.__parameter.setFormat(form)
         return fn
     return inner
 
@@ -108,7 +105,7 @@ def required(required):
         if not hasattr(fn, '__operation'):
             fn.__operation = Operation()
             
-        fn.__operation.setRequired(Operation.required)
+        fn.__parameter.setRequired(required)
         return fn
     return inner
 
@@ -141,7 +138,7 @@ class Parameter(object):
     def setName(self, name):
         self.name = name
         
-    def setForm(self, form):
+    def setFormat(self, form):
         self.form = form   
     
     def setRequired(self, required):
