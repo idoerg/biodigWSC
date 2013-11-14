@@ -11,7 +11,7 @@ def Property(name, typ):
         attribute = Attribute()
         attribute.setName(name)
         attribute.setType(typ)
-        model.addAttribute(attribute)
+        fn.__model.addAttribute(attribute)
         
         return fn
     return inner
@@ -51,7 +51,7 @@ class Model(object):
     def setDescription(self, desc):
         self.description = desc
 
-    def setAttribute(self, attr):
+    def addAttribute(self, attr):
         self.attributes[attr.name] = attr
 
 #Class of Objects for the decorators
