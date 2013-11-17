@@ -1,6 +1,5 @@
 #!usr/bin/python
 
-
 #For reference check the APIs section in API Declaration
 
 ###Includes the conversion for types
@@ -19,9 +18,9 @@ DELETE = 'DELETE'
 def Method(method):
     def inner(fn):
         if not hasattr(fn, '__operation'):
-            fn.__operation = Operation()
+            fn.operation = Operation()
             
-        fn.__operation.setMethod(method)
+        fn.operation.setMethod(method)
         return fn
     return inner
 
@@ -36,9 +35,9 @@ def Method(method):
 def Nickname(nickname):
     def inner(fn):
         if not hasattr(fn, '__operation'):
-            fn.__operation = Operation()
+            fn.operation = Operation()
             
-        fn.__operation.setNickname(nickname)
+        fn.operation.setNickname(nickname)
         return fn
     return inner
 
@@ -52,9 +51,9 @@ def Nickname(nickname):
 def Type(obj):
     def inner(fn):
         if not hasattr(fn, '__operation'):
-            fn.__operation = Operation()
+            fn.operation = Operation()
             
-        fn.__operation.setObject(obj)
+        fn.operation.setObject(obj)
         return fn
     return inner
 
@@ -64,18 +63,18 @@ def Type(obj):
 def Summary(summary):
     def inner(fn):
         if not hasattr(fn, '__operation'):
-            fn.__operation = Operation()
+            fn.operation = Operation()
             
-        fn.__operation.setSummary(summary)
+        fn.operation.setSummary(summary)
         return fn
     return inner
 
 def Notes(notes):
     def inner(fn):
         if not hasattr(fn, '__operation'):
-            fn.__operation = Operation()  
+            fn.operation = Operation()  
             
-        fn.__operation.setNotes(notes)
+        fn.operation.setNotes(notes)
         return fn
     return inner
 
@@ -96,6 +95,8 @@ class Operation(object):
         self.notes = '' #defualt value for notes
         
         self.obj = None #default value for object
+        
+        self.params = { }
 
     def setDescription(self, desc):
         self.description = desc
@@ -114,3 +115,9 @@ class Operation(object):
         
     def setNotes(self, notes):
         self.notes = notes   
+        
+    def addParam(self, param):
+        self.params[param.name] = param
+
+    def __eq__(self, other): 
+        return self.description == other.description and self.nickname == other.nickname and self.method == other.method and self.summary == other.summary and self.notes == other.notes and self.obj == other.obj and self.params == other.params

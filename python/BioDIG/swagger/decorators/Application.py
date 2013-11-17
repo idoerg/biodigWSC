@@ -1,19 +1,15 @@
 #!usr/bin/python
 
-##Used to import the Operations class and the methods there
-import Operations
-Operation = Operations.Operation()
-
 #For reference see the API Declaration portion in the Swagger Specification
 
 #Used to set the path of your API
 def Path(path):
     def inner(fn):
-        if not hasattr(fn, '__operation'):
-            fn.__operation = Operation()  
+        if not hasattr(fn, 'Application'):
+            fn.application = Application()  
             
-        fn.__application.setPath(path)
-        fn.__path = path;
+        fn.applications.setPath(path)
+        fn.path = path;
         return fn
         
         return fn
@@ -22,11 +18,11 @@ def Path(path):
 #Master description for your API
 def Description(desc):
     def inner(fn):
-        if not hasattr(fn, '__operation'):
-            fn.__operation = Operation()  
+        if not hasattr(fn, 'Application'):
+            fn.application = Application() 
             
-        fn.__application.setDescription(desc)
-        fn.__desc = desc;
+        fn.application.setDescription(desc)
+        fn.desc = desc;
         return fn
         
         
@@ -48,3 +44,7 @@ class Application(object):
         
     def setPath(self, path):
         self.path = path
+        
+        
+    def __eq__(self, other): 
+        return self.desc == other.desc and self.path == other.path

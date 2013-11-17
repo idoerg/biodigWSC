@@ -2,16 +2,22 @@
 
 #This section was based off of the Swagger Specification of Data Types under the Complex Types section
 
+String = 'string'
+Boolean = 'boolean'
+Date = 'date'
+Integer = 'int'
+dateTime = 'date-time'
+
 #Decorator that is used when you define a more complex structure
 def Property(name, typ):
     def inner(fn):
-        if not hasattr(fn, '__model'):
-            fn.__model = Model()
+        if not hasattr(fn, 'model'):
+            fn.model = Model()
             
         attribute = Attribute()
         attribute.setName(name)
         attribute.setType(typ)
-        fn.__model.addAttribute(attribute)
+        fn.model.addAttribute(attribute)
         
         return fn
     return inner
@@ -19,10 +25,10 @@ def Property(name, typ):
 #Used to define the name
 def Description(desc):
     def inner(fn):
-        if not hasattr(fn, '__model'):
-            fn.__model = Model()
+        if not hasattr(fn, 'model'):
+            fn.model = Model()
             
-        fn.__model.setDescription(desc)
+        fn.model.setDescription(desc)
         return fn
     return inner
 
@@ -30,10 +36,10 @@ def Description(desc):
 #tp == type, fm == format
 def Id(ID):
     def inner(fn):
-        if not hasattr(fn, '__model'):
-            fn.__model = Model()
+        if not hasattr(fn, 'model'):
+            fn.model = Model()
             
-        fn.__model.setID(ID)
+        fn.model.setID(ID)
         return fn
     return inner
 
@@ -44,9 +50,14 @@ class Model(object):
         self.description = ''
 
         self.attributes = {}
+        
+        self.name = ''
 
     def setID(self, ID):
         self.ID = ID
+        
+    def setName(self, name):
+        self.name = name
 
     def setDescription(self, desc):
         self.description = desc
@@ -71,8 +82,8 @@ class Attribute(object):
     def setName(self, name):
         self.name = name
         
-    def setNickname(self, nick):
-        self.nickname = nick
+    def setNickname(self, nickname):
+        self.nickname = nickname
         
     def setType(self, typ):
         self.typ = typ   
@@ -85,3 +96,6 @@ class Attribute(object):
         
     def setNotes(self, notes):
         self.notes = notes   
+
+    def __eq__(self, other): 
+        return self.name == other.name and self.nickname == other.nickname and self.typ == other.typ and self.obj == other.obj and self.summary == other.summary and self.notes == other.notes
