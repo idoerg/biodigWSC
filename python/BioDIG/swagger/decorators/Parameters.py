@@ -163,7 +163,10 @@ class Parameter(object):
         self.required = required
         
     def setDataType(self, dataType):
-        self.dataType = dataType      
+        self.dataType = dataType   
+        
+    def setParamType(self, paramType):
+        self.paramType = paramType   
         
     def __eq__(self, other): 
-        return self.description == other.description and self.name == other.description and self.form == other.form and self.required == other.required and self. dataType == other.dataType   
+        return self.description == other.description and self.name == other.name and self.form == other.form and self.required == other.required and self. dataType == other.dataType   

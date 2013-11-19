@@ -4,6 +4,8 @@
 
 ###Includes the conversion for types
 
+from DictDiffer import DictDiffer
+
 # Constants for the Method Decorator
 GET = 'GET'
 POST = 'POST'
@@ -118,6 +120,14 @@ class Operation(object):
         
     def addParam(self, param):
         self.params[param.name] = param
+        
+    def getParam(self, name):
+        try:
+            return self.params[name]
+        except KeyError:
+            return None
 
     def __eq__(self, other): 
-        return self.description == other.description and self.nickname == other.nickname and self.method == other.method and self.summary == other.summary and self.notes == other.notes and self.obj == other.obj and self.params == other.params
+        result = self.description == other.description and self.nickname == other.nickname and self.method == other.method and self.summary == other.summary and self.notes == other.notes and self.obj == other.obj
+        result = result and len(DictDiffer(self.params, other.params).changed()) == 0
+        return result
