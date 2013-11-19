@@ -1,0 +1,156 @@
+Mon Nov 18 19:19:10 2013    OptParseTest_profile.txt
+
+         1943 function calls (1898 primitive calls) in 0.002 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.002    0.002 <string>:1(<module>)
+        1    0.000    0.000    0.002    0.002 OptParseTest.py:34(main)
+        1    0.000    0.000    0.002    0.002 optparse.py:1367(parse_args)
+        1    0.000    0.000    0.001    0.001 optparse.py:1419(_process_args)
+        1    0.000    0.000    0.001    0.001 optparse.py:1516(_process_short_opts)
+        1    0.000    0.000    0.001    0.001 optparse.py:778(process)
+        1    0.000    0.000    0.001    0.001 optparse.py:790(take_action)
+        1    0.000    0.000    0.001    0.001 optparse.py:1660(print_help)
+        1    0.000    0.000    0.001    0.001 optparse.py:1641(format_help)
+        1    0.000    0.000    0.001    0.001 optparse.py:1076(format_description)
+        1    0.000    0.000    0.001    0.001 optparse.py:266(format_description)
+        1    0.000    0.000    0.001    0.001 optparse.py:254(_format_text)
+        1    0.000    0.000    0.001    0.001 textwrap.py:348(fill)
+        6    0.000    0.000    0.001    0.000 textwrap.py:107(__init__)
+       12    0.000    0.000    0.001    0.000 re.py:188(compile)
+       12    0.000    0.000    0.001    0.000 re.py:226(_compile)
+        2    0.000    0.000    0.001    0.000 sre_compile.py:495(compile)
+        2    0.000    0.000    0.000    0.000 sre_parse.py:663(parse)
+      7/2    0.000    0.000    0.000    0.000 sre_parse.py:301(_parse_sub)
+      9/2    0.000    0.000    0.000    0.000 sre_parse.py:379(_parse)
+        1    0.000    0.000    0.000    0.000 optparse.py:1621(format_option_help)
+        2    0.000    0.000    0.000    0.000 sre_compile.py:480(_code)
+        6    0.000    0.000    0.000    0.000 textwrap.py:308(wrap)
+        1    0.000    0.000    0.000    0.000 optparse.py:1067(format_option_help)
+        5    0.000    0.000    0.000    0.000 optparse.py:289(format_option)
+     16/2    0.000    0.000    0.000    0.000 sre_compile.py:32(_compile)
+        5    0.000    0.000    0.000    0.000 textwrap.py:335(wrap)
+        1    0.000    0.000    0.000    0.000 optparse.py:1190(__init__)
+        5    0.000    0.000    0.000    0.000 gettext.py:565(gettext)
+        6    0.000    0.000    0.000    0.000 textwrap.py:155(_split)
+        5    0.000    0.000    0.000    0.000 gettext.py:527(dgettext)
+        6    0.000    0.000    0.000    0.000 {method 'split' of '_sre.SRE_Pattern' objects}
+        5    0.000    0.000    0.000    0.000 gettext.py:461(translation)
+        5    0.000    0.000    0.000    0.000 optparse.py:1007(add_option)
+        5    0.000    0.000    0.000    0.000 gettext.py:421(find)
+        1    0.000    0.000    0.000    0.000 textwrap.py:323(fill)
+        1    0.000    0.000    0.000    0.000 optparse.py:1257(_populate_option_list)
+        6    0.000    0.000    0.000    0.000 textwrap.py:235(_wrap_chunks)
+        5    0.000    0.000    0.000    0.000 optparse.py:560(__init__)
+        2    0.000    0.000    0.000    0.000 sre_compile.py:361(_compile_info)
+       51    0.000    0.000    0.000    0.000 sre_parse.py:201(get)
+       70    0.000    0.000    0.000    0.000 sre_parse.py:182(__next)
+        5    0.000    0.000    0.000    0.000 gettext.py:130(_expand_lang)
+        9    0.000    0.000    0.000    0.000 sre_compile.py:178(_compile_charset)
+        1    0.000    0.000    0.000    0.000 optparse.py:1252(_add_version_option)
+     19/9    0.000    0.000    0.000    0.000 sre_parse.py:140(getwidth)
+        1    0.000    0.000    0.000    0.000 optparse.py:1276(set_usage)
+       67    0.000    0.000    0.000    0.000 sre_parse.py:130(__getitem__)
+        1    0.000    0.000    0.000    0.000 optparse.py:1247(_add_help_option)
+      327    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 optparse.py:1585(get_usage)
+        1    0.000    0.000    0.000    0.000 optparse.py:324(store_option_strings)
+       59    0.000    0.000    0.000    0.000 sre_parse.py:195(match)
+        5    0.000    0.000    0.000    0.000 optparse.py:609(_set_attrs)
+  364/355    0.000    0.000    0.000    0.000 {len}
+        5    0.000    0.000    0.000    0.000 locale.py:339(normalize)
+        1    0.000    0.000    0.000    0.000 optparse.py:373(format_usage)
+        3    0.000    0.000    0.000    0.000 ntpath.py:196(basename)
+        9    0.000    0.000    0.000    0.000 sre_compile.py:207(_optimize_charset)
+        1    0.000    0.000    0.000    0.000 optparse.py:1318(get_default_values)
+        3    0.000    0.000    0.000    0.000 ntpath.py:164(split)
+       95    0.000    0.000    0.000    0.000 {isinstance}
+       20    0.000    0.000    0.000    0.000 os.py:444(get)
+       12    0.000    0.000    0.000    0.000 sre_parse.py:225(_class_escape)
+        2    0.000    0.000    0.000    0.000 optparse.py:1564(expand_prog_name)
+        6    0.000    0.000    0.000    0.000 textwrap.py:138(_munge_whitespace)
+        6    0.000    0.000    0.000    0.000 sre_compile.py:354(_simple)
+       94    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+        5    0.000    0.000    0.000    0.000 optparse.py:588(_set_opt_strings)
+        1    0.000    0.000    0.000    0.000 {method 'encode' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 optparse.py:1558(get_prog_name)
+        5    0.000    0.000    0.000    0.000 optparse.py:342(format_option_strings)
+        5    0.000    0.000    0.000    0.000 optparse.py:279(expand_default)
+       70    0.000    0.000    0.000    0.000 {method 'pop' of 'list' objects}
+       63    0.000    0.000    0.000    0.000 {setattr}
+        1    0.000    0.000    0.000    0.000 optparse.py:365(__init__)
+       32    0.000    0.000    0.000    0.000 sre_parse.py:126(__len__)
+        1    0.000    0.000    0.000    0.000 {method 'write' of 'file' objects}
+        1    0.000    0.000    0.000    0.000 optparse.py:932(__init__)
+       17    0.000    0.000    0.000    0.000 {method 'replace' of 'str' objects}
+       17    0.000    0.000    0.000    0.000 sre_parse.py:138(append)
+        1    0.000    0.000    0.000    0.000 optparse.py:1567(get_description)
+       16    0.000    0.000    0.000    0.000 sre_parse.py:90(__init__)
+        1    0.000    0.000    0.000    0.000 optparse.py:200(__init__)
+       32    0.000    0.000    0.000    0.000 {min}
+       11    0.000    0.000    0.000    0.000 {filter}
+        5    0.000    0.000    0.000    0.000 optparse.py:579(_check_opt_strings)
+       22    0.000    0.000    0.000    0.000 {method 'join' of 'str' objects}
+       15    0.000    0.000    0.000    0.000 {method 'find' of 'str' objects}
+        6    0.000    0.000    0.000    0.000 {method 'expandtabs' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 sre_parse.py:178(__init__)
+        2    0.000    0.000    0.000    0.000 sre_parse.py:83(closegroup)
+        1    0.000    0.000    0.000    0.000 optparse.py:1242(_create_option_list)
+        2    0.000    0.000    0.000    0.000 {_sre.compile}
+        1    0.000    0.000    0.000    0.000 optparse.py:1570(exit)
+       21    0.000    0.000    0.000    0.000 {method 'upper' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 optparse.py:837(__init__)
+        5    0.000    0.000    0.000    0.000 optparse.py:832(isbasestring)
+        5    0.000    0.000    0.000    0.000 optparse.py:980(_check_conflict)
+        5    0.000    0.000    0.000    0.000 optparse.py:635(_check_type)
+        5    0.000    0.000    0.000    0.000 optparse.py:629(_check_action)
+        1    0.000    0.000    0.000    0.000 optparse.py:1309(set_defaults)
+       16    0.000    0.000    0.000    0.000 {method 'strip' of 'str' objects}
+        5    0.000    0.000    0.000    0.000 optparse.py:678(_check_dest)
+        4    0.000    0.000    0.000    0.000 sre_compile.py:474(isstring)
+       11    0.000    0.000    0.000    0.000 {method 'translate' of 'str' objects}
+        3    0.000    0.000    0.000    0.000 ntpath.py:122(splitdrive)
+        5    0.000    0.000    0.000    0.000 sre_parse.py:257(_escape)
+        7    0.000    0.000    0.000    0.000 {range}
+        2    0.000    0.000    0.000    0.000 sre_parse.py:72(opengroup)
+        5    0.000    0.000    0.000    0.000 optparse.py:693(_check_const)
+       11    0.000    0.000    0.000    0.000 {method 'reverse' of 'list' objects}
+        3    0.000    0.000    0.000    0.000 optparse.py:243(dedent)
+        5    0.000    0.000    0.000    0.000 optparse.py:699(_check_nargs)
+        1    0.000    0.000    0.000    0.000 optparse.py:1654(_get_encoding)
+        8    0.000    0.000    0.000    0.000 {max}
+        6    0.000    0.000    0.000    0.000 optparse.py:752(takes_value)
+        2    0.000    0.000    0.000    0.000 sre_parse.py:67(__init__)
+        5    0.000    0.000    0.000    0.000 optparse.py:665(_check_choice)
+        2    0.000    0.000    0.000    0.000 optparse.py:764(check_value)
+        5    0.000    0.000    0.000    0.000 optparse.py:708(_check_callback)
+        1    0.000    0.000    0.000    0.000 {sys.exit}
+        3    0.000    0.000    0.000    0.000 optparse.py:239(indent)
+        1    0.000    0.000    0.000    0.000 {method 'copy' of 'dict' objects}
+       15    0.000    0.000    0.000    0.000 sre_compile.py:24(_identityfunction)
+        1    0.000    0.000    0.000    0.000 optparse.py:1638(format_epilog)
+        1    0.000    0.000    0.000    0.000 os.py:422(__getitem__)
+        1    0.000    0.000    0.000    0.000 optparse.py:959(set_conflict_handler)
+        5    0.000    0.000    0.000    0.000 {method 'extend' of 'list' objects}
+        6    0.000    0.000    0.000    0.000 sre_parse.py:134(__setitem__)
+        1    0.000    0.000    0.000    0.000 optparse.py:1312(_get_all_options)
+        3    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 optparse.py:376(format_heading)
+        1    0.000    0.000    0.000    0.000 {method 'update' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 optparse.py:943(_create_option_mappings)
+       13    0.000    0.000    0.000    0.000 {ord}
+        1    0.000    0.000    0.000    0.000 optparse.py:771(convert_value)
+        1    0.000    0.000    0.000    0.000 optparse.py:1361(_get_args)
+        1    0.000    0.000    0.000    0.000 optparse.py:272(format_epilog)
+        2    0.000    0.000    0.000    0.000 {method 'remove' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 optparse.py:964(set_description)
+        1    0.000    0.000    0.000    0.000 {getattr}
+        1    0.000    0.000    0.000    0.000 optparse.py:1267(_init_parsing_state)
+        1    0.000    0.000    0.000    0.000 sre_parse.py:205(tell)
+        2    0.000    0.000    0.000    0.000 optparse.py:755(get_opt_string)
+        1    0.000    0.000    0.000    0.000 optparse.py:224(set_parser)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+

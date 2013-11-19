@@ -8,7 +8,7 @@ def Path(path):
         if not hasattr(fn, 'Application'):
             fn.application = Application()  
             
-        fn.applications.setPath(path)
+        fn.application.setPath(path)
         fn.path = path;
         return fn
         
@@ -40,11 +40,10 @@ class Application(object):
         
     #Setters for the variables
     def setDescription(self, desc):
-        self.description = desc
+        self.desc = desc
         
     def setPath(self, path):
         self.path = path
-        
         
     def __eq__(self, other): 
         return self.desc == other.desc and self.path == other.path

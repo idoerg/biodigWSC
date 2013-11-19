@@ -19,44 +19,44 @@ ParamType = {
 
 ##Function:Parameter
 ##Use:Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_Path(name, description='', dataType='', form=''):
+def ParamType_Path(name, paramType='', description='', dataType='', form=''):
     def inner(fn):
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()
-           
-        fn.operations.addParam(Parameter(ParamType.PATH, name, description, dataType, form))
+        paramType = ParamType['PATH']   
+        fn.operations.addParam(Parameter(paramType, name, description, dataType, form))
         
         return fn
     return inner
 ##Function: Parameter Type query
 ##Use: Has logic to determine if the name value has been populated. Will enter a default name if it has not, will preserve if it has
-def ParamType_Query(name, description='', dataType='', form=''):
+def ParamType_Query(name, paramType='', description='', dataType='', form=''):
     def inner(fn):
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()
-            
-        fn.operations.addParam(Parameter(ParamType.QUERY, name, description, dataType, form))
+        paramType = ParamType.QUERY    
+        fn.operations.addParam(Parameter(paramType, name, description, dataType, form))
         return fn
     return inner
     
 ##Function:Parameter Type Body
 ##Use:Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_Body(name, description='', dataType='', form=''):
+def ParamType_Body(name, paramType='', description='', dataType='', form=''):
     def inner(fn):
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()
-        
-        fn.operations.addParam(Parameter(ParamType.BODY, name, description, dataType, form))
+        paramType = ParamType.BODY 
+        fn.operations.addParam(Parameter(paramType, name, description, dataType, form))
         return fn
     return inner
 ##Function: Parameter Type Form
 ##Use: Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_Form(name, description='', dataType='', form=''):
+def ParamType_Form(name, paramType='', description='', dataType='', form=''):
     def inner(fn):
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()
-           
-        fn.operations.addParam(Parameter(ParamType.FORM, name, description, dataType, form))
+        paramType = ParamType.FORM    
+        fn.operations.addParam(Parameter(paramType, name, description, dataType, form))
         return fn
     return inner
     
@@ -64,8 +64,6 @@ def ParamType_Form(name, description='', dataType='', form=''):
 ##Use:Describles the particular parameter, paired with name
 def Description(name, desc):
     def inner(fn):
-        if not hasattr(fn, 'parameters'):
-            fn.parameters = Parameter()
             
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()   
@@ -74,7 +72,7 @@ def Description(name, desc):
         if not param:
             param = Parameter(name)
 
-        param.setDescription(desc)
+        fn.operations.setDescription(desc)
         
         return fn
     return inner
@@ -86,7 +84,7 @@ def Datatype(dataType):
         if not hasattr(fn, 'parameters'):
             fn.parameters = Parameter()
             
-        fn.parameter.setDatatype(dataType)
+        fn.parameters.setDatatype(dataType)
     return inner
 
 ##Function: Format of the API 
@@ -96,7 +94,7 @@ def Format(form):
         if not hasattr(fn, 'parameters'):
             fn.parameters = Parameter()
             
-        fn.parameter.setFormat(form)
+        fn.parameters.setFormat(form)
         return fn
     return inner
 
@@ -107,7 +105,7 @@ def required(required):
         if not hasattr(fn, 'parameters'):
             fn.parameters = Parameter()
             
-        fn.parameter.setRequired(required)
+        fn.parameters.setRequired(required)
         return fn
     return inner
 
@@ -117,7 +115,7 @@ class Parameter(object):
     def __init__(self):
         self.description = '' # default value for description
 
-        self.required = True #defualt value for required
+        self.required = True #default value for required
 
         self.format = '' #default value for format
 
@@ -125,7 +123,9 @@ class Parameter(object):
         
         self.name = '' #default value for name
        
-        self.param = {}
+        self.param = {} #dictionary variable to hold the different parameters
+        
+        self.paramType = '' #default vale for a paramType
         
         self.form = '' #default value for the form paramType
         
