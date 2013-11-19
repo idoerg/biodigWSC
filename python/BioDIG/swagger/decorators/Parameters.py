@@ -19,12 +19,12 @@ ParamType = {
 
 ##Function:Parameter
 ##Use:Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_Path(name, paramType='', description='', dataType='', form=''):
+def ParamType_Path(name, description='', dataType='', form=''):
     def inner(fn):
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()
         paramType = ParamType['PATH']   
-        fn.operations.addParam(Parameter(paramType, name, description, dataType, form))
+        fn.operations.addParam(Parameter(name, paramType, description, dataType, form))
         
         return fn
     return inner
@@ -34,8 +34,8 @@ def ParamType_Query(name, paramType='', description='', dataType='', form=''):
     def inner(fn):
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()
-        paramType = ParamType.QUERY    
-        fn.operations.addParam(Parameter(paramType, name, description, dataType, form))
+        paramType = ParamType['QUERY']   
+        fn.operations.addParam(Parameter(name, paramType, description, dataType, form))
         return fn
     return inner
     
@@ -45,8 +45,8 @@ def ParamType_Body(name, paramType='', description='', dataType='', form=''):
     def inner(fn):
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()
-        paramType = ParamType.BODY 
-        fn.operations.addParam(Parameter(paramType, name, description, dataType, form))
+        paramType = ParamType['BODY']
+        fn.operations.addParam(Parameter(name, paramType, description, dataType, form))
         return fn
     return inner
 ##Function: Parameter Type Form
@@ -55,8 +55,8 @@ def ParamType_Form(name, paramType='', description='', dataType='', form=''):
     def inner(fn):
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()
-        paramType = ParamType.FORM    
-        fn.operations.addParam(Parameter(paramType, name, description, dataType, form))
+        paramType = ParamType['FORM']    
+        fn.operations.addParam(Parameter(name, paramType, description, dataType, form))
         return fn
     return inner
     
@@ -64,76 +64,87 @@ def ParamType_Form(name, paramType='', description='', dataType='', form=''):
 ##Use:Describles the particular parameter, paired with name
 def Description(name, desc):
     def inner(fn):
-            
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()   
             
-        param = fn.operations.getParameter(name)
+        param = fn.operations.getParam(name)
         if not param:
             param = Parameter(name)
 
-        fn.operations.setDescription(desc)
+        param.setDescription(desc)
+        fn.operations.addParam(param)
         
         return fn
     return inner
 
 ##Function: Datatype parameter
 ##Use:Must be a primitive if the paramType is a path, query, or header
-def Datatype(dataType):
+def Datatype(name, dataType):
     def inner(fn):
-        if not hasattr(fn, 'parameters'):
-            fn.parameters = Parameter()
+        if not hasattr(fn, 'operations'):
+            fn.operations = Operation()   
             
-        fn.parameters.setDatatype(dataType)
+        param = fn.operations.getParam(name)
+        if not param:
+            param = Parameter(name)
+
+        param.setDataType(dataType)
+        fn.operations.addParam(param)
+        
+        return fn
     return inner
 
 ##Function: Format of the API 
 ##Use: Determines if the format is an integer, double, string, etc.
-def Format(form):
+def Format(name, form):
     def inner(fn):
-        if not hasattr(fn, 'parameters'):
-            fn.parameters = Parameter()
+        if not hasattr(fn, 'operations'):
+            fn.operations = Operation()   
             
-        fn.parameters.setFormat(form)
+        param = fn.operations.getParam(name)
+        if not param:
+            param = Parameter(name)
+
+        param.setFormat(form)
+        fn.operations.addParam(param)
+        
         return fn
     return inner
 
 ##Function: Required Parameter
 ##Use: Decorator for the required field, with the default being true
-def required(required):
+def required(name, required):
     def inner(fn):
-        if not hasattr(fn, 'parameters'):
-            fn.parameters = Parameter()
+        if not hasattr(fn, 'operations'):
+            fn.operations = Operation()   
             
-        fn.parameters.setRequired(required)
+        param = fn.operations.getParam(name)
+        if not param:
+            param = Parameter(name)
+
+        param.setRequired(required)
+        fn.operations.addParam(param)
+        
         return fn
     return inner
 
 
 # The object for decorators looking for description
 class Parameter(object):
-    def __init__(self):
-        self.description = '' # default value for description
+    def __init__(self, name='', paramType='', description='', dataType='', form=''):
+        self.description = description # default value for description
 
         self.required = True #default value for required
 
-        self.format = '' #default value for format
+        self.form = form #default value for format
 
-        self.dataType = '' #default value for dataType
+        self.dataType = dataType #default value for dataType
         
-        self.name = '' #default value for name
+        self.name = name #default value for name
        
         self.param = {} #dictionary variable to hold the different parameters
         
-        self.paramType = '' #default vale for a paramType
-        
-        self.form = '' #default value for the form paramType
-        
-        self.body = '' #default value for the body ParamType
-        
-        self.query = '' #default value for the query ParamType
-        
-        self.path = '' #default value for the path ParamType
+        self.paramType = paramType #default vale for a paramType
 
         
        
