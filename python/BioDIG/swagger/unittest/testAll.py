@@ -5,13 +5,13 @@ Created on Nov 14, 2013
 '''
 #!/usr/bin/python
 import unittest
-import Types
 import Operations
-import Model
+import Models
 import Parameters
 import Applications
 from Operations import Operation
-from Model import Attribute
+from Models import Attribute
+from Models import Model
 from Parameters import Parameter
 from Applications import Application
 
@@ -20,7 +20,6 @@ class BioDIGtest(unittest.TestCase):
     testCases for Operations.py
     '''
     def testOperations(self):
-
         @Operations.Method(Operations.GET)
         def testMethod():
             pass
@@ -28,7 +27,7 @@ class BioDIGtest(unittest.TestCase):
         # test Operations.Method
         soln = Operation()
         soln.setMethod(Operations.GET)
-        self.assertEqual(testMethod.__operation, soln)
+        self.assertEqual(testMethod.operation, soln)
 
         @Operations.Nickname('nickname')
         def testNickname():
@@ -36,7 +35,7 @@ class BioDIGtest(unittest.TestCase):
 
         soln = Operation()
         soln.setNickname('nickname')
-        self.assertEqual(testNickname.__operation, soln)
+        self.assertEqual(testNickname.operation, soln)
 
         @Operations.Type('type')
         def testType():
@@ -44,7 +43,7 @@ class BioDIGtest(unittest.TestCase):
 
         soln = Operation()
         soln.setObject('type')
-        self.assertEqual(testType.__operation, soln)
+        self.assertEqual(testType.operation, soln)
 
         @Operations.Summary('summary')
         def testSummary():
@@ -52,7 +51,7 @@ class BioDIGtest(unittest.TestCase):
 
         soln = Operation()
         soln.setSummary('summary')
-        self.assertEqual(testSummary.__operation, soln)
+        self.assertEqual(testSummary.operation, soln)
 
         @Operations.Notes('notes')
         def testNotes():
@@ -60,47 +59,39 @@ class BioDIGtest(unittest.TestCase):
 
         soln = Operation()
         soln.setNotes('notes')
-        self.assertEqual(testNotes.__operation, soln)
+        self.assertEqual(testNotes.operation, soln)
 
+    print '\n.....Done testing Operations'
     '''
-    testCases for Model.py
+    testCases for Models.py
     '''
     def testModel(self):
-        @Model.Property('name', Types.String)
+        @Models.Property('name', Models.String)
         def testProperty():
             pass
 
         soln = Attribute()
         soln.setName('name')
-        soln.setType(Types.String)
-        self.assertEqual(testProperty.__model,soln)
+        soln.setType(Models.String)
 
-        @Model.Name('name')
-        def testName():
+        self.assertEqual(testProperty.model.attributes['name'],soln)
+
+        @Models.Description('desc')
+        def testDescription():
             pass
+        soln = Model()
+        soln.setDescription('desc')
+        self.assertEqual(testDescription.model,soln)
 
-        soln = Attribute()
-        soln.setName('name')
-        self.assertEqual(testName.__operation,soln)
-
-        @Model.Type(Types.String, 'name')
-        def testType():
-            pass
-
-        soln = Attribute()
-        soln.setType(Types.String)
-        soln.setName('name')
-        self.assertEqual(testType.__operation,soln)
-
-        @Model.Id('name', 'tp' , None)
+        @Models.Id('id')
         def testId():
             pass
 
         soln = Model()
-        soln.setType('tp')
-        soln.setFormat(None)
-        self.assertEqual(testId.__operation,soln)
+        soln.setID('id')
+        self.assertEqual(testId.model,soln)
 
+    print '\n.....Done testing Models'
     '''
     testCases for Parameters.py
     '''
@@ -111,8 +102,9 @@ class BioDIGtest(unittest.TestCase):
 
         soln = Parameter()
         soln.setName('name')
-        soln.setParamType(Parameters.ParamType.PATH)
-        self.assertEqual(testParamType_Path.__operation,soln)
+        soln.setParamType(Parameters.ParamType['PATH'])
+
+        self.assertEqual(testParamType_Path.operations.getParam('name'),soln)
 
         @Parameters.ParamType_Query('name')
         def testParamType_Query():
@@ -120,8 +112,9 @@ class BioDIGtest(unittest.TestCase):
 
         soln = Parameter()
         soln.setName('name')
-        soln.setParamType(Parameters.ParamType.QUERY)
-        self.assertEqual(testParamType_Query.__operation,soln)
+        soln.setParamType(Parameters.ParamType['QUERY'])
+
+        self.assertEqual(testParamType_Query.operations.getParam('name'),soln)
 
         @Parameters.ParamType_Body('name')
         def testParamType_Body():
@@ -129,8 +122,9 @@ class BioDIGtest(unittest.TestCase):
 
         soln = Parameter()
         soln.setName('name')
-        soln.setParamType(Parameters.ParamType.BODY)
-        self.assertEqual(testParamType_Body.__operation,soln)
+        soln.setParamType(Parameters.ParamType['BODY'])
+
+        self.assertEqual(testParamType_Body.operations.getParam('name'),soln)
 
         @Parameters.ParamType_Form('name')
         def testParamType_Form():
@@ -138,8 +132,9 @@ class BioDIGtest(unittest.TestCase):
 
         soln = Parameter()
         soln.setName('name')
-        soln.setParamType(Parameters.ParamType.FORM)
-        self.assertEqual(testParamType_Form.__operation,soln)
+        soln.setParamType(Parameters.ParamType['FORM'])
+
+        self.assertEqual(testParamType_Form.operations.getParam('name'),soln)
 
         @Parameters.Description('name', 'desc')
         def testDescription():
@@ -148,31 +143,36 @@ class BioDIGtest(unittest.TestCase):
         soln = Parameter()
         soln.setName('name')
         soln.setDescription('desc')
-        self.assertEqual(testDescription.__operation,soln)
+        self.assertEqual(testDescription.operations.getParam('name'),soln)
 
-        @Parameters.Datatype(Types.Integer)
+        @Parameters.Datatype('name',Models.Integer)
         def testDataType():
             pass
 
         soln = Parameter()
-        soln.setDataType(Types.Integer)
-        self.assertEqual(testDataType.__operation,soln)
+        soln.setName('name')
+        soln.setDataType(Models.Integer)
+        self.assertEqual(testDataType.operations.getParam('name'),soln)
 
-        @Parameters.Format('form')
+        @Parameters.Format('name','form')
         def testFormat():
             pass
 
         soln = Parameter()
+        soln.setName('name')
         soln.setFormat('form')
-        self.assertEqual(testFormat.__operation,soln)
+        self.assertEqual(testFormat.operations.getParam('name'),soln)
 
-        @Parameters.required(False)
+        @Parameters.required('name',False)
         def testRequired():
             pass
 
         soln = Parameter()
+        soln.setName('name')
         soln.setRequired(False)
-        self.assertEqual(testRequired.__operation,soln)
+        self.assertEqual(testRequired.operations.getParam('name'),soln)
+
+    print '\n.....Done testing Parameters'
 
     '''
     testCases for Applications.py
@@ -184,7 +184,7 @@ class BioDIGtest(unittest.TestCase):
 
         soln = Application()
         soln.setPath('path')
-        self.assertEqual(testPath.__operation,soln)
+        self.assertEqual(testPath.application,soln)
 
         @Applications.Description('desc')
         def testAppDes():
@@ -192,8 +192,9 @@ class BioDIGtest(unittest.TestCase):
 
         soln = Application()
         soln.setDescription('desc')
-        self.assertEqual(testAppDes.__operation,soln)
+        self.assertEqual(testAppDes.application,soln)
 
+    print '\n.....Done testing Applications'
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
