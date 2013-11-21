@@ -19,6 +19,7 @@ It defines classes_and_methods
 
 import sys
 import os
+import imp
 
 from optparse import OptionParser
 
@@ -27,7 +28,7 @@ __version__ = 0.1
 __date__ = '2013-11-18'
 __updated__ = '2013-11-18'
 
-DEBUG = 1
+DEBUG = 0
 TESTRUN = 0
 PROFILE = 0
 
@@ -46,34 +47,42 @@ def main(argv=None):
 
     if argv is None:
         argv = sys.argv[0:]
-    try:
-        # setup option parser
-        parser = OptionParser(version=program_version_string, epilog=program_longdesc, description=program_license)
-        parser.add_option("-i", "--in", dest="infile", help="set input path [default: %default]", metavar="FILE")
-        parser.add_option("-o", "--out", dest="outfile", help="set output path [default: %default]", metavar="FILE")
-        parser.add_option("-v", "--verbose", dest="verbose", action="count", help="set verbosity level [default: %default]")
-        parser.add_option("-f", "--file", dest="outfile", action="store", help="write report to FILE", metavar="FILE")
+        
+    # setup option parser
+    #add operation spec, model spec, and application spec
+    #check to see if the files can be loaded, (How to import a file given the full path)
+    
+    #import imp
+    #foo= imp.load_source('module.name', '/path/to/file.py')
+    #foo.MyClass()
+    parser = OptionParser(version=program_version_string, epilog=program_longdesc, description=program_license)
+    parser.add_option("-i", "--in", dest="infile", help="set input path [default: %default]", metavar="FILE")
+#    parser.add_option("-o", "--out", dest="outfile", help="set output path [default: %default]", metavar="FILE")
+    parser.add_option("-v", "--verbose", dest="verbose", action="count", help="set verbosity level [default: %default]")
+    parser.add_option("-f", "--file", dest="outfile", action="store", help="write report to FILE", metavar="FILE")
+    
+    #Operations to handle the files for the optparser
+    parser.add_option("-o", "--operations", dest="operations", help="Sets the file path for the operations file", metavar="FILE")
+    parser.add_option("-m", "--models", dest="models", help="Sets the file path for the models file", metavar="FILE")
+    parser.add_option("-a", "--appications", dest="applications", help="Sets the file path for the applications file", metavar="FILE")
+    
 
-        # set defaults
-        parser.set_defaults(outfile="out.txt", infile="in.txt")
+    # set defaults, add logic to see if there are no defaults, throw an exception
+    parser.set_defaults(operations="out.txt", models="in.txt", applications="")
 
-        # process options
-        (opts, args) = parser.parse_args(argv)
+    # process options
+    (opts, args) = parser.parse_args(argv)
 
-        if opts.verbose > 0:
-            print("verbosity level = %d" % opts.verbose)
-        if opts.infile:
-            print("infile = %s" % opts.infile)
-        if opts.outfile:
-            print("outfile = %s" % opts.outfile)
-
-        # MAIN BODY #
-
-    except Exception as e:
-        indent = len(program_name) * " "
-        sys.stderr.write(program_name + ": " + repr(e) + "\n")
-        sys.stderr.write(indent + "  for help use --help")
-        return 2
+# MAIN BODY #
+    
+    #Operations logic
+    Operations = imp.load_source('Operations.py', './Operations.py')
+    
+    #Models logic
+    Models = imp.load_source('Models.py', 'some path here')
+    
+    #Applications logic
+    Applications = imp.load_source('Applications.py', 'some path here')
 
 
 if __name__ == "__main__":
