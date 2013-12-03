@@ -3,6 +3,7 @@
 
 ##Used to import the Operations class and the methods there
 from Operations import Operation
+import Types
 
 
 ##Decorators for the parameters
@@ -19,7 +20,7 @@ ParamType = {
 
 ##Function:Parameter
 ##Use:Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_Path(name, description='', dataType='', form=''):
+def Path(name, dataType= Types.String, description='', form=''):
     def inner(fn):
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()
@@ -30,7 +31,7 @@ def ParamType_Path(name, description='', dataType='', form=''):
     return inner
 ##Function: Parameter Type query
 ##Use: Has logic to determine if the name value has been populated. Will enter a default name if it has not, will preserve if it has
-def ParamType_Query(name, paramType='', description='', dataType='', form=''):
+def Query(name, dataType= Types.String, description='', form=''):
     def inner(fn):
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()
@@ -41,7 +42,7 @@ def ParamType_Query(name, paramType='', description='', dataType='', form=''):
     
 ##Function:Parameter Type Body
 ##Use:Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_Body(name, paramType='', description='', dataType='', form=''):
+def Body(name, dataType= Types.String, description='', form=''):
     def inner(fn):
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()
@@ -51,7 +52,7 @@ def ParamType_Body(name, paramType='', description='', dataType='', form=''):
     return inner
 ##Function: Parameter Type Form
 ##Use: Used to define the parameter type for the request. Will default if nothing is provided
-def ParamType_Form(name, paramType='', description='', dataType='', form=''):
+def Form(name, dataType= Types.String, description='', form=''):
     def inner(fn):
         if not hasattr(fn, 'operations'):
             fn.operations = Operation()
