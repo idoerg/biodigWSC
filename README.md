@@ -1,4 +1,4 @@
-biodigWSC
+BiodigWSC
 =========
 
 BioDIG WebService Clients
