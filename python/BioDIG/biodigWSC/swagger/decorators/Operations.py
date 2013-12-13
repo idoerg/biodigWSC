@@ -19,43 +19,43 @@ DELETE = 'DELETE'
 '''
 def Method(method):
     def inner(fn):
-        if not hasattr(fn, 'operation'):
-            fn.operation = Operation()
+        if not hasattr(fn, 'operations'):
+            fn.operations = Operation()
 
-        fn.operation.setMethod(method)
+        fn.operations.setMethod(method)
         return fn
     return inner
 
 '''
-   Sets the nickname of the operation being described.
+   Sets the nickname of the operations being described.
    This often corresponds to the method and the resource.
    For instance, a GET method with a type of Tag would usually
    revceive the nickname of "getTag".
 
-   @param nickname The off-hand name for the operation.
+   @param nickname The off-hand name for the operations.
 '''
 def Nickname(nickname):
     def inner(fn):
-        if not hasattr(fn, 'operation'):
-            fn.operation = Operation()
+        if not hasattr(fn, 'operations'):
+            fn.operations = Operation()
 
-        fn.operation.setNickname(nickname)
+        fn.operations.setNickname(nickname)
         return fn
     return inner
 
 '''
-    Sets the type returned by the operation. This type should be
+    Sets the type returned by the operations. This type should be
     a primitive, which should be a constant from Types or an object
     annotated correctly using the Types decorators.
 
-    @param obj The object/primitive returned by the operation
+    @param obj The object/primitive returned by the operations
 '''
 def Type(obj):
     def inner(fn):
-        if not hasattr(fn, 'operation'):
-            fn.operation = Operation()
+        if not hasattr(fn, 'operations'):
+            fn.operations = Operation()
 
-        fn.operation.setObject(obj)
+        fn.operations.setObject(obj)
         return fn
     return inner
 
@@ -64,19 +64,19 @@ def Type(obj):
 '''
 def Summary(summary):
     def inner(fn):
-        if not hasattr(fn, 'operation'):
-            fn.operation = Operation()
+        if not hasattr(fn, 'operations'):
+            fn.operations = Operation()
 
-        fn.operation.setSummary(summary)
+        fn.operations.setSummary(summary)
         return fn
     return inner
 
 def Notes(notes):
     def inner(fn):
-        if not hasattr(fn, 'operation'):
-            fn.operation = Operation()
+        if not hasattr(fn, 'operations'):
+            fn.operations = Operation()
 
-        fn.operation.setNotes(notes)
+        fn.operations.setNotes(notes)
         return fn
     return inner
 

@@ -109,25 +109,27 @@ def main(argv=None):
 
 
     #Iterate through Operations
-    opsSwagger = None
+    opsSwagger = []
     tempDict["operations"] = []
     for name,obj in inspect.getmembers(Operations):
-        if(hasattr(obj, 'operation')):
+        if(hasattr(obj, 'operations')):
+            print name
             tempOp = {}
-            opsSwagger = obj.operation
-            tempOp["httpMethod"] = opsSwagger.method
-            tempOp["summary"] = opsSwagger.summary
-            tempOp["nickname"] = opsSwagger.nickname
-            tempOp["responseClass"] = opsSwagger.obj;
+            opsSwagger.append(obj.operations)
+            tempOpsSwagger = obj.operations
+            tempOp["httpMethod"] = tempOpsSwagger.method
+            tempOp["summary"] = tempOpsSwagger.summary
+            tempOp["nickname"] = tempOpsSwagger.nickname
+            tempOp["responseClass"] = tempOpsSwagger.obj;
             tempOp["parameters"] = []
-            for name  in opsSwagger.params:
+            for name  in tempOpsSwagger.params:
                 tempPar = {}
-                tempPar["name"] = opsSwagger.params.get(name).name
-                tempPar["paramType"] = opsSwagger.params.get(name).paramType
-                tempPar["required"] = opsSwagger.params.get(name).required
-                if(opsSwagger.params.get(name).dataType != ""):
-                    tempPar["dataType"] = opsSwagger.params.get(name).dataType
-                tempPar["description"] = opsSwagger.params.get(name).description
+                tempPar["name"] = tempOpsSwagger.params.get(name).name
+                tempPar["paramType"] = tempOpsSwagger.params.get(name).paramType
+                tempPar["required"] = tempOpsSwagger.params.get(name).required
+                if(tempOpsSwagger.params.get(name).dataType != ""):
+                    tempPar["dataType"] = tempOpsSwagger.params.get(name).dataType
+                tempPar["description"] = tempOpsSwagger.params.get(name).description
                 tempOp["parameters"].append(dict(tempPar))
             tempDict["operations"].append(dict(tempOp))
     tempString.append(dict(tempDict))
@@ -143,17 +145,22 @@ def main(argv=None):
     tempModel = {}
     for name,obj in inspect.getmembers(Models):
         if(hasattr(obj, 'model')):
-            tempModel[obj.Meta.model.__name__] = {}
-            tempSubModel = {}
-            #print obj.Meta.model.__name__
-            mpsSwagger = obj.model
-            tempSubModel["properties"] = {}
-            tempSubModel["id"] = obj.Meta.model.__name__
-            tempAtt = {}
-            for name in mpsSwagger.attributes:
-                tempAtt[name] = {'type':mpsSwagger.attributes.get(name).typ}
-            tempSubModel["properties"] = tempAtt
-            tempModel[obj.Meta.model.__name__] = tempSubModel
+            for i in opsSwagger:
+                #print i.obj
+                if(name == i.obj): #if model name equals to operation.obj
+                    key = i.obj
+                    if key not in tempModel:
+                        tempModel[i.obj] = {}
+                        tempSubModel = {}
+                        #print obj.Meta.model.__name__
+                        mpsSwagger = obj.model
+                        tempSubModel["properties"] = {}
+                        tempSubModel["id"] = i.obj
+                        tempAtt = {}
+                        for name in mpsSwagger.attributes:
+                            tempAtt[name] = {'type':mpsSwagger.attributes.get(name).typ}
+                        tempSubModel["properties"] = tempAtt
+                        tempModel[i.obj] = tempSubModel
 
     if not mpsSwagger:
         raise AppError("No Models decorator found")
